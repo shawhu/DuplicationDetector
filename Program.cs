@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace DuplicationDetector
 {
@@ -9,12 +10,17 @@ namespace DuplicationDetector
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("DuplicationDetector (v0.8.0)");
+            string infoVer = Assembly
+            .GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion ?? "Unknown";
+            // Only take the part before '+'
+            string displayVer = infoVer.Split('+')[0];
+            Console.WriteLine($"Duplication Detector (v{displayVer})");
+            Console.WriteLine("A tool for detecting duplicate files.");
             Console.WriteLine("Author:\tHarry Xiao");
             Console.WriteLine("Email:\tshawhu@gmail.com");
-            Console.WriteLine("");
-            Console.WriteLine("");
-
+            Console.WriteLine();
 
             // Parse flags
             bool targetRecursive = false;
